@@ -26,7 +26,6 @@ class DefinitionTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "happy"
         label.textColor = .white
         return label
     }()
@@ -34,7 +33,6 @@ class DefinitionTableViewCell: UITableViewCell {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "marked by good fortune"
         label.textColor = .lightGray
         return label
     }()
@@ -42,7 +40,6 @@ class DefinitionTableViewCell: UITableViewCell {
     let partsOfSpeechLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "adjective"
         label.textColor = .white
         return label
     }()
@@ -87,5 +84,12 @@ class DefinitionTableViewCell: UITableViewCell {
             subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
         ])
+    }
+    
+    func updateViews(usingWordDetail wordDetail: WordDetail, ofWord word: String) {
+        
+        titleLabel.text = word        
+        subtitleLabel.text = wordDetail.definition
+        partsOfSpeechLabel.text = wordDetail.partOfSpeech
     }
 }

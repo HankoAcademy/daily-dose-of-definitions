@@ -10,6 +10,10 @@ import UIKit
 
 class SearchDefinitionView: UIView {
     
+    // MARK: - Class Properties
+    
+    weak var searchDefinitionsDelegate: SearchDefinitionsDelegate?
+    
     // MARK: - UI Properties
     
     // https://medium.com/nyc-design/swift-4-add-icon-to-uitextfield-48f5ebf60aa1
@@ -53,8 +57,10 @@ class SearchDefinitionView: UIView {
     
     // MARK: - Initializers
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(searchDefinitionsDelegate: SearchDefinitionsDelegate?) {
+        super.init(frame: .zero)
+        
+        self.searchDefinitionsDelegate = searchDefinitionsDelegate
         
         setUpViews()
     }
@@ -91,6 +97,8 @@ class SearchDefinitionView: UIView {
     
     @objc func searchButtonPressed() {
         print("Search button pressed")
+        
+        searchDefinitionsDelegate?.searchDefinitions(forWord: textField.text)
     }
 }
 
