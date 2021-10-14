@@ -52,6 +52,7 @@ class RandomWordViewController: UIViewController {
                 DispatchQueue.main.async { [weak self] in
                     self?.randomWordView.titleLabel.text = randomWord.word
                     self?.randomWordView.descriptionLabel.text = randomWord.results?.first?.definition
+                    self?.randomWordView.partsOfSpeechLabel.text = randomWord.results?.first?.partOfSpeech
                 }
             }
             catch {

@@ -79,7 +79,6 @@ extension SearchDefinitionsViewController: SearchDefinitionsDelegate {
         URLSession.shared.dataTask(with: request) { data, response, error in
             
             guard let data = data, error == nil else {
-                completion(nil, error)
                 return
             }
             
@@ -91,12 +90,9 @@ extension SearchDefinitionsViewController: SearchDefinitionsDelegate {
                     self?.selectedWord = word.word
                     self?.contentView.tableView.reloadData()
                 }
-                
-//                completion(wordDetails, nil)
             }
             catch {
                 print("Failed to decode RandomWord with error: \(error.localizedDescription)")
-//                completion(nil, error)
             }
         }.resume()
     }
