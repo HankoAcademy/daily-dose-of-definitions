@@ -22,6 +22,7 @@ class SearchDefinitionView: UIView {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Find a word..."
         textField.backgroundColor = .white
+        textField.layer.cornerRadius = 15.0
         
         let iconView = UIImageView(frame:
                           CGRect(x: 10, y: 5, width: 20, height: 20))
@@ -43,7 +44,7 @@ class SearchDefinitionView: UIView {
         button.setTitle("Search", for: .normal)
         button.addTarget(self, action: #selector(searchButtonPressed), for: .touchUpInside)
         button.setTitleColor(.blue, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return button
     }()
     

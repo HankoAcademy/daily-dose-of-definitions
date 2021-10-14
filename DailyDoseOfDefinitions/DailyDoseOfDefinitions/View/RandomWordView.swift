@@ -19,7 +19,7 @@ class RandomWordView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label
     }()
     
@@ -35,7 +35,7 @@ class RandomWordView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
         label.lineBreakMode = .byWordWrapping
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .light)
         return label
     }()
     
@@ -44,16 +44,20 @@ class RandomWordView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Random Word"
         label.textColor = .darkGray
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return label
     }()
     
     let refreshButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "arrow.triangle.2.circlepath.circle"), for: .normal)
         button.tintColor = .gray
         button.addTarget(self, action: #selector(refreshButtonPressed), for: .touchUpInside)
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .medium, scale: .medium)
+        let largeBoldDoc = UIImage(systemName: "arrow.triangle.2.circlepath.circle", withConfiguration: largeConfig)
+        button.setImage(largeBoldDoc, for: .normal)
+
         return button
     }()
     
@@ -86,22 +90,20 @@ class RandomWordView: UIView {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 30),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            titleLabel.widthAnchor.constraint(equalToConstant: 140),
+            titleLabel.trailingAnchor.constraint(equalTo: partsOfSpeechLabel.leadingAnchor, constant: -4),
             
-            partsOfSpeechLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            partsOfSpeechLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            partsOfSpeechLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 4),
             partsOfSpeechLabel.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: -4),
             
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
             descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            descriptionLabel.trailingAnchor.constraint(equalTo: partsOfSpeechLabel.trailingAnchor),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
             randomWordLabel.leadingAnchor.constraint(equalTo: descriptionLabel.leadingAnchor),
             randomWordLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
             
             refreshButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             refreshButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
-            refreshButton.heightAnchor.constraint(equalToConstant: 40),
             refreshButton.widthAnchor.constraint(equalTo: refreshButton.heightAnchor)
         ])
     }        

@@ -31,7 +31,6 @@ class WordDetailsView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
-        stackView.alignment = .leading
         return stackView
     }()
     
@@ -40,13 +39,8 @@ class WordDetailsView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
         label.isHidden = true
-        return label
-    }()
-    
-    let infoTypeLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12, weight: .thin)
         return label
     }()
     
@@ -56,6 +50,16 @@ class WordDetailsView: UIView {
         label.textColor = .black
         label.numberOfLines = 3
         label.lineBreakMode = .byWordWrapping
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        return label
+    }()
+    
+    let infoTypeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         return label
     }()
     
@@ -73,7 +77,7 @@ class WordDetailsView: UIView {
         
         layer.cornerRadius = 20
         
-        backgroundColor = .white        
+        backgroundColor = .white
         
         descriptionLabel.textColor = .black
         
@@ -86,11 +90,10 @@ class WordDetailsView: UIView {
         addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            
             stackView.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
         ])
     }
 }

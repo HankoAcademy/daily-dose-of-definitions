@@ -27,6 +27,7 @@ class DefinitionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return label
     }()
     
@@ -34,6 +35,9 @@ class DefinitionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        label.lineBreakMode = .byWordWrapping
+        label.numberOfLines = 3
         return label
     }()
     
@@ -41,6 +45,7 @@ class DefinitionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         return label
     }()
     
@@ -69,19 +74,20 @@ class DefinitionTableViewCell: UITableViewCell {
         contentView.addSubview(containerView)
                 
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -0),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -6),
             
-            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+            titleLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             
             partsOfSpeechLabel.leadingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 4),
             partsOfSpeechLabel.bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             subtitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            subtitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -4),
             subtitleLabel.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10)
         ])
     }

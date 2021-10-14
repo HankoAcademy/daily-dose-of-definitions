@@ -26,37 +26,43 @@ class DefinitionDetailsView: UIView {
     
     lazy var definitionView: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
-        wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        wordDetailsView.partsOfSpeechLabel.text = wordDetail.partOfSpeech
+        wordDetailsView.translatesAutoresizingMaskIntoConstraints = false        
         wordDetailsView.infoTypeLabel.text = "Definition"
         wordDetailsView.descriptionLabel.text = wordDetail.definition
+        wordDetailsView.partsOfSpeechLabel.text = wordDetail.partOfSpeech
         wordDetailsView.partsOfSpeechLabel.isHidden = false
+        wordDetailsView.backgroundColor = .white
         return wordDetailsView
     }()
     
     let synonymsView: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
         wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        wordDetailsView.partsOfSpeechLabel.text = "adj."
+        wordDetailsView.infoTypeLabel.textColor = .white
         wordDetailsView.infoTypeLabel.text = "Synonyms"
         wordDetailsView.descriptionLabel.text = "enjoying or showing or marked by joy or please"
+        wordDetailsView.backgroundColor = .lightGray
         return wordDetailsView
     }()
     
     let antonymsView: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
         wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        wordDetailsView.partsOfSpeechLabel.text = "adj."
+        wordDetailsView.infoTypeLabel.textColor = .white
         wordDetailsView.infoTypeLabel.text = "Antonyms"
         wordDetailsView.descriptionLabel.text = "enjoying or showing or marked by joy or please"
+        wordDetailsView.backgroundColor = .gray
         return wordDetailsView
     }()
     
     let exampleview: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
         wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        wordDetailsView.infoTypeLabel.textColor = .white
         wordDetailsView.infoTypeLabel.text = "Example Usage"
+        wordDetailsView.descriptionLabel.textColor = .lightGray
         wordDetailsView.descriptionLabel.text = "enjoying or showing or marked by joy or please"
+        wordDetailsView.backgroundColor = .darkGray
         return wordDetailsView
     }()
     
@@ -79,15 +85,20 @@ class DefinitionDetailsView: UIView {
     private func setUpViews() {
         
         backgroundColor = .black
-        
-        addSubview(scrollView)
+                        
         contentStackView.addArrangedSubview(definitionView)
         contentStackView.addArrangedSubview(synonymsView)
+        contentStackView.addArrangedSubview(antonymsView)
+        contentStackView.addArrangedSubview(exampleview)
+        
         let emptyView = UIView()
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.addArrangedSubview(emptyView)
+        
         scrollView.addSubview(contentStackView)
         
+        addSubview(scrollView)
+                
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
