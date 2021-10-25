@@ -8,7 +8,7 @@
 import UIKit
 
 protocol randomWordDisplayDelegate:AnyObject{
-    func getRandomWordInTextBox(completion: @escaping (String)->())
+    func getRandomWordInTextBox(recursionCounter:Int,completion: @escaping (String)->())
 }
 protocol definitionDetailsParent:AnyObject{
     func launchDetailDefinitionVC(wordInstance:WordInstance)
@@ -130,8 +130,9 @@ class FirstViewController: UIViewController, randomWordDisplayDelegate{
         
     }
     
-    func getRandomWordInTextBox(completion:@escaping (String)->()) {
+    func getRandomWordInTextBox(recursionCounter:Int,completion:@escaping (String)->()) {
         var randomWord:Word?
+        var localCounter = recursionCounter + 1
         
         Networking.shared.getRandomWord{[weak self] aResult in
             switch aResult{
@@ -158,7 +159,10 @@ class FirstViewController: UIViewController, randomWordDisplayDelegate{
             if (!titleString.trimmingCharacters(in:.whitespaces).isEmpty) && !(text.trimmingCharacters(in:.whitespaces).isEmpty){
                 completion("\(titleString)\n\(text)")
             } else {
-                self?.getRandomWordInTextBox(completion: completion)
+                print("recursion counter \(localCounter)")
+                if localCounter <= 10{
+                    self?.getRandomWordInTextBox(recursionCounter:localCounter,completion: completion)
+                }
             }
             
         } //networking

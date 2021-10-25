@@ -59,7 +59,7 @@ class DefinitionBox: UIView {
     
     
     @objc func getRandomWordInTextBox(){
-        displayDelegate?.getRandomWordInTextBox{[weak self] text in
+        displayDelegate?.getRandomWordInTextBox(recursionCounter:0){[weak self] text in
             DispatchQueue.main.async{
                 self?.textView.text = text
             }
@@ -69,7 +69,7 @@ class DefinitionBox: UIView {
         self.displayDelegate = displayDelegate
         super.init(frame:.zero)
         setUpUI()
-        displayDelegate?.getRandomWordInTextBox{[weak self] text in
+        displayDelegate?.getRandomWordInTextBox(recursionCounter:0){[weak self] text in
             DispatchQueue.main.async{
             print("text for now \(text)")
             self?.textView.text = text
