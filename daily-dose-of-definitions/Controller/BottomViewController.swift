@@ -11,7 +11,7 @@ class BottomViewController: UIViewController {
     
     let headers = [
         "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-        "x-rapidapi-key": "1b9044a06cmsh012a65d2cb4481ap1b7ebejsn99b12f197786"
+        "x-rapidapi-key": "youwish"
     ]
     var selectedWord: String?
     var selectedWordResults: [WordDetails]?
