@@ -6,19 +6,14 @@
 //
 
 import UIKit
+import Alamofire
 
 class BottomViewController: UIViewController {
     
-    var topViewController: TopViewController!
-    
-    let headers = [
-        "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-        "x-rapidapi-key": ""
-    ]
+    var bottomView: BottomView!
+        
     var selectedWord: String?
     var selectedWordResults: [WordDetails]?
-    
-    var bottomView: BottomView!
     
     override func loadView() {
         
@@ -33,6 +28,7 @@ class BottomViewController: UIViewController {
                     self?.selectedWord = wordData?.word
                     self?.selectedWordResults = wordData?.results
 
+                    self?.bottomView.spinner.stopAnimating()
                     self?.bottomView.tableView.reloadData()
                 }
             }
@@ -44,41 +40,60 @@ class BottomViewController: UIViewController {
         bottomView.searchTextField.delegate = self
 
         view = bottomView
-    
     }
     
     func fetchDefinitions(completion: @escaping (Word?, Error?) -> Void) {
+        
+        let headers: HTTPHeaders = [
+            "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+            "x-rapidapi-key": ""
+        ]
+        
         let newWord = bottomView.searchTextField.text!
         if newWord.isEmpty {presentMissingWordAlert()}
         
-        guard let newWordURL = URL(string: "https://wordsapiv1.p.rapidapi.com/words/\(newWord)") else {
-            print("Invalid URL")
-            return
+        bottomView.spinner.startAnimating()
+        
+        AF.request("https://wordsapiv1.p.rapidapi.com/words/\(newWord)", method: .get, headers: headers).responseDecodable(of: Word.self) { response in
+
+            if let error = response.error {
+                completion(nil, error)
+                print(error.localizedDescription)
+            }
+            
+            let decodedWord = response.value
+            completion(decodedWord, nil)
         }
 
-        var urlRequest = URLRequest(url: newWordURL,
-                         cachePolicy: .useProtocolCachePolicy,
-                         timeoutInterval: 10.0)
-        urlRequest.httpMethod = "GET"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.allHTTPHeaderFields = headers
-
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(nil, error)
-                return
-            }
-            do {
-                let decodedWord = try JSONDecoder().decode(Word.self, from: data)
-                print(decodedWord)
-                completion(decodedWord, error)
-            }
-            catch {
-                print("Failed to decode word \(error.localizedDescription)")
-                completion(nil, error)
-            }
-        }.resume()
+//        MARK: - Traditional URL Session Request
+//        guard let newWordURL = URL(string: "https://wordsapiv1.p.rapidapi.com/words/\(newWord)") else {
+//            print("Invalid URL")
+//            return
+//        }
+//
+//        var urlRequest = URLRequest(url: newWordURL,
+//                         cachePolicy: .useProtocolCachePolicy,
+//                         timeoutInterval: 10.0)
+//        urlRequest.httpMethod = "GET"
+//        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+//        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        urlRequest.allHTTPHeaderFields = headers
+//
+//        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+//            guard let data = data, error == nil else {
+//                completion(nil, error)
+//                return
+//            }
+//            do {
+//                let decodedWord = try JSONDecoder().decode(Word.self, from: data)
+//                print(decodedWord)
+//                completion(decodedWord, error)
+//            }
+//            catch {
+//                print("Failed to decode word \(error.localizedDescription)")
+//                completion(nil, error)
+//            }
+//        }.resume()
         
         func presentMissingWordAlert() {
             let alertController = UIAlertController(title: "", message: "Please enter a word to retrieve definitions", preferredStyle: .alert)

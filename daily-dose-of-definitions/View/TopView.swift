@@ -53,6 +53,12 @@ class TopView: UIView {
         return instructionsLabel
     }()
     
+    let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     var fetchWordButton: UIButton = {
         let image = UIImage(named: "refresh_icon") as UIImage?
         let button = UIButton(type: UIButton.ButtonType.custom)
@@ -86,6 +92,7 @@ class TopView: UIView {
         topBarStackView.addArrangedSubview(randomWordLabel)
         topBarStackView.addArrangedSubview(partOfSpeechLabel)
         addSubview(topBarStackView)
+        addSubview(spinner)
         addSubview(definitionLabel)
         addSubview(instructionsLabel)
         addSubview(fetchWordButton)
@@ -98,6 +105,9 @@ class TopView: UIView {
         //topBarStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
         partOfSpeechLabel.bottomAnchor.constraint(equalTo: topBarStackView.bottomAnchor, constant: -2),
+        
+        spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+        spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
 
         definitionLabel.topAnchor.constraint(equalTo: randomWordLabel.bottomAnchor, constant: 10),
         definitionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),

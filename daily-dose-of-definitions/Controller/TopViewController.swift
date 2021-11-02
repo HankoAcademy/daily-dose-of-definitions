@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol RandomWordGeneratable: AnyObject {
     func generateRandomWordToDisplay()
@@ -31,6 +32,8 @@ class TopViewController: UIViewController {
                         self?.topView?.definitionLabel.text = "definition not available yet"
                     }
                     self?.topView?.partOfSpeechLabel.text = wordData?.results?.first?.partOfSpeech
+                    
+                    self?.topView.spinner.stopAnimating()
                 }
             }
         })
@@ -39,39 +42,60 @@ class TopViewController: UIViewController {
     }
 
     func fetchNewRandomWord(completion: @escaping (Word?, Error?) -> Void) {
-        guard let newWordURL = URL(string: "https://wordsapiv1.p.rapidapi.com/words/?random=true") else {
-            print("Invalid URL")
-            return
-        }
         
-        let headers = [
+        let headers: HTTPHeaders = [
             "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
             "x-rapidapi-key": ""
         ]
+        
+        topView.spinner.startAnimating()
+        
+        AF.request("https://wordsapiv1.p.rapidapi.com/words/?random=true", method: .get, headers: headers).responseDecodable(of: Word.self) { response in
 
-        var urlRequest = URLRequest(url: newWordURL,
-                         cachePolicy: .useProtocolCachePolicy,
-                         timeoutInterval: 10.0)
-        urlRequest.httpMethod = "GET"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.allHTTPHeaderFields = headers
+            if let error = response.error {
+                completion(nil, error)
+                print(error.localizedDescription)
+            }
 
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(nil, error)
-                return
-            }
-            do {
-                self.randomWord = try JSONDecoder().decode(Word.self, from: data)
-                print(self.randomWord!)
-                completion(self.randomWord, error)
-            }
-            catch {
-                print("Failed to convert \(error.localizedDescription)")
-                completion(nil, error)
-            }
-        }.resume()
+            self.randomWord = response.value
+            completion(self.randomWord, nil)
+        }
+        
+            
+//        MARK: - Traditional URL Session Request
+//        guard let newWordURL = URL(string: "https://wordsapiv1.p.rapidapi.com/words/?random=true") else {
+//            print("Invalid URL")
+//            return
+//        }
+//
+//        let headers = [
+//            "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+//            "x-rapidapi-key": "ec2d98353dmshe451ea49fea8d97p1026a6jsn7cf62ffe7212"
+//        ]
+//
+//        var urlRequest = URLRequest(url: newWordURL,
+//                         cachePolicy: .useProtocolCachePolicy,
+//                         timeoutInterval: 10.0)
+//        urlRequest.httpMethod = "GET"
+//        urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+//        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        urlRequest.allHTTPHeaderFields = headers
+//
+//        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+//            guard let data = data, error == nil else {
+//                completion(nil, error)
+//                return
+//            }
+//            do {
+//                self.randomWord = try JSONDecoder().decode(Word.self, from: data)
+//                print(self.randomWord!)
+//                completion(self.randomWord, error)
+//            }
+//            catch {
+//                print("Failed to convert \(error.localizedDescription)")
+//                completion(nil, error)
+//            }
+//        }.resume()
 
     }
 }

@@ -1,0 +1,6 @@
+framework module Pods_daily_dose_of_definitions {
+  umbrella header "Pods-daily-dose-of-definitions-umbrella.h"
+
+  export *
+  module * { export * }
+}

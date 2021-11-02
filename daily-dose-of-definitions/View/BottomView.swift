@@ -46,6 +46,12 @@ class BottomView: UIView {
     
     var buttonAction: (() -> Void)?
     
+    let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        return spinner
+    }()
+    
     init(buttonAction: @escaping () -> Void, frame: CGRect = .zero) {
         self.buttonAction = buttonAction
         super.init(frame: frame)
@@ -72,9 +78,11 @@ class BottomView: UIView {
     
     private func setUpUI() {
         
-        addSubview(searchBarStackView)
         searchBarStackView.addArrangedSubview(searchTextField)
         searchBarStackView.addArrangedSubview(searchButton)
+        
+        addSubview(searchBarStackView)
+        addSubview(spinner)
         addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -84,6 +92,9 @@ class BottomView: UIView {
         searchBarStackView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1),
         searchBarStackView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.10),
         
+        spinner.topAnchor.constraint(equalTo: searchBarStackView.bottomAnchor, constant: 30),
+        spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+
         tableView.topAnchor.constraint(equalTo: searchBarStackView.bottomAnchor, constant: 10),
         tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
         tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
