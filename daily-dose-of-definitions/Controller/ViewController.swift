@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     var contentView: ContentView!
     var topViewController: TopViewController!
@@ -47,8 +47,9 @@ class ViewController: UIViewController {
         bottomViewController.view.bottomAnchor.constraint(equalTo: contentView.bottomContainerView.bottomAnchor, constant: 0),
         bottomViewController.view.trailingAnchor.constraint(equalTo: contentView.bottomContainerView.trailingAnchor, constant: 0),
         ])
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }

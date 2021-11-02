@@ -9,16 +9,18 @@ import UIKit
 
 class BottomViewController: UIViewController {
     
+    var topViewController: TopViewController!
+    
     let headers = [
         "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-        "x-rapidapi-key": "youwish"
+        "x-rapidapi-key": ""
     ]
     var selectedWord: String?
     var selectedWordResults: [WordDetails]?
     
     var bottomView: BottomView!
     
-    override func viewDidLoad() {
+    override func loadView() {
         
         bottomView = BottomView(buttonAction: { [weak self] in
             self?.fetchDefinitions{ wordData, error in
@@ -35,10 +37,14 @@ class BottomViewController: UIViewController {
                 }
             }
         })
+        
         bottomView.tableView.dataSource = self
         bottomView.tableView.delegate = self
+        
+        bottomView.searchTextField.delegate = self
 
         view = bottomView
+    
     }
     
     func fetchDefinitions(completion: @escaping (Word?, Error?) -> Void) {
@@ -112,4 +118,12 @@ extension BottomViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         navigationController?.pushViewController(WordDetailsViewController(selectedWord: selectedWord, wordDetails: selectedWordResults), animated: true)    }
+}
+
+extension BottomViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

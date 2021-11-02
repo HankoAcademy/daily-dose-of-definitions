@@ -35,6 +35,7 @@ class TopViewController: UIViewController {
             }
         })
         view = topView
+    
     }
 
     func fetchNewRandomWord(completion: @escaping (Word?, Error?) -> Void) {
@@ -45,7 +46,7 @@ class TopViewController: UIViewController {
         
         let headers = [
             "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-            "x-rapidapi-key": "youwish!"
+            "x-rapidapi-key": ""
         ]
 
         var urlRequest = URLRequest(url: newWordURL,
