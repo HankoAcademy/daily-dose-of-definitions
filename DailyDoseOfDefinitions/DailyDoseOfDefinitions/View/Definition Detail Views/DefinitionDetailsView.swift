@@ -35,33 +35,36 @@ class DefinitionDetailsView: UIView {
         return wordDetailsView
     }()
     
-    let synonymsView: WordDetailsView = {
+    lazy var synonymsView: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
         wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        wordDetailsView.isHidden = wordDetail.synonyms == nil
         wordDetailsView.infoTypeLabel.textColor = .white
         wordDetailsView.infoTypeLabel.text = "Synonyms"
-        wordDetailsView.descriptionLabel.text = "enjoying or showing or marked by joy or please"
+        wordDetailsView.descriptionLabel.text = wordDetail.synonyms?.joined(separator: ", ")
         wordDetailsView.backgroundColor = .lightGray
         return wordDetailsView
     }()
     
-    let antonymsView: WordDetailsView = {
+    lazy var antonymsView: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
         wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        wordDetailsView.isHidden = wordDetail.antonyms == nil
         wordDetailsView.infoTypeLabel.textColor = .white
         wordDetailsView.infoTypeLabel.text = "Antonyms"
-        wordDetailsView.descriptionLabel.text = "enjoying or showing or marked by joy or please"
+        wordDetailsView.descriptionLabel.text = wordDetail.antonyms?.joined(separator: ", ")
         wordDetailsView.backgroundColor = .gray
         return wordDetailsView
     }()
     
-    let exampleview: WordDetailsView = {
+    lazy var exampleview: WordDetailsView = {
         let wordDetailsView = WordDetailsView()
         wordDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        wordDetailsView.isHidden = wordDetail.examples == nil
         wordDetailsView.infoTypeLabel.textColor = .white
         wordDetailsView.infoTypeLabel.text = "Example Usage"
         wordDetailsView.descriptionLabel.textColor = .lightGray
-        wordDetailsView.descriptionLabel.text = "enjoying or showing or marked by joy or please"
+        wordDetailsView.descriptionLabel.text = wordDetail.examples?.joined(separator: ", ")
         wordDetailsView.backgroundColor = .darkGray
         return wordDetailsView
     }()
