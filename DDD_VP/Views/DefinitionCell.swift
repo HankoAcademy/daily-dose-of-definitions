@@ -47,25 +47,17 @@ class DefinitionCell: UITableViewCell {
    //  setupUI()
    
  }
+ 
     override func layoutSubviews() {
         setupUI()
     }
  required init?(coder: NSCoder) {
      super.init(coder: coder)
-     
      setupUI()
  }
     private func setupUI(){
-      //  self.contentView.layer.cornerRadius = 20
         self.contentView.backgroundColor = .white
-    
-        /*
-        contentView.addSubview(wordLabel)
-        contentView.addSubview(definitionLabel)
-         */
-        
         NSLayoutConstraint.activate([
-            
             wordLabel.heightAnchor.constraint(equalToConstant: 20),
             wordLabel.widthAnchor.constraint(equalToConstant: 150)
         ])
@@ -91,10 +83,6 @@ class DefinitionCell: UITableViewCell {
             definitionLabel.leadingAnchor.constraint(equalTo: stack.leadingAnchor, constant: 10)
             
         ])
-        /*
-        wordLabel.setContentHuggingPriority(.required, for: .vertical)
-        definitionLabel.setContentHuggingPriority(.required, for:.vertical)
-        */
     }
  
 }

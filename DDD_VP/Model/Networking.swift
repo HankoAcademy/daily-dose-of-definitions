@@ -13,7 +13,6 @@ enum NetworkError:Error{
 }
 import Foundation
 
-let APIKey = "7c6ca773b0msh6e3dba86e36d849p11d286jsn5c9d03a5ec6a"
 let baseUrlString = "https://wordsapiv1.p.rapidapi.com/words"
 let randomString = "\(baseUrlString)/?random=true"
 
@@ -59,50 +58,11 @@ class Networking{
                 completion(.failure(.decodingError))
                 return
             }
-            
             completion(.success(word))
         }
         dataTask.resume()
     }
-    /*
-    func getRandomWord(completion:@escaping(Word) ->()){
-       //errors need to goto completion block
-        let headers = [
-            "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-            "x-rapidapi-key" : APIKey
-        ]
-        
-        let requestString = randomString
-        let request = NSMutableURLRequest(url: NSURL(string: requestString)! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = headers
-        
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error)
-                return
-            } else {
-                guard let httpResponse = response as? HTTPURLResponse,
-                      (200..<300).contains(httpResponse.statusCode),
-                      let data = data else {
-                          print(error)
-                          return
-                      }
-                print( String(data:data, encoding:.ascii))
-                let decoder = JSONDecoder()
-                guard let aWord = try? decoder.decode(Word.self, from:data) else {
-                    print("failed to retrieve random word")
-                    return
-                }
-                completion(aWord)
-            }
-        })
-        dataTask.resume()
-    }
-     */
+    
     func getRandomWord(completion:@escaping(Result<Word,NetworkError>) ->()){
        
         let headers = [

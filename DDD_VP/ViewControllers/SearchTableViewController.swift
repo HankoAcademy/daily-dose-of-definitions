@@ -105,14 +105,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, UIS
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       
        guard let word = word,let results = word.results else {return}
-    //    guard let word = word,let results = results else {return}
-      //  guard let results = results else {return}
         let selectedInstance = results[indexPath.row]
-        /*
-        if let definitionVC = DefinitionDetailController(wordInstance:selectedInstance) as? DefinitionDetailController {
-            self.present(definitionVC, animated: true)
-        }
-       */
+       
         delegate?.launchDetailDefinitionVC(wordInstance:selectedInstance)
     }
     
@@ -122,9 +116,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate, UIS
               return UITableViewCell()
         }
         cell.wordLabel.text = word?.word
-        print("assigning wordLabel to \(word?.word)")
         let definition = word?.results?[indexPath.row].definition
-        print("assigning definition label to \(definition)")
         cell.definitionLabel.text = definition
         return cell
     }

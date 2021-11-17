@@ -17,7 +17,7 @@ protocol definitionDetailsParent:AnyObject{
 class FirstViewController: UIViewController, randomWordDisplayDelegate{
     var randomWord:Word?
     var randomResults:[WordInstance]?
-    var count = 0
+    var recursionCount = 0
     
     //MARK: - UI Component Declarations
     
@@ -132,6 +132,7 @@ class FirstViewController: UIViewController, randomWordDisplayDelegate{
     
     func getRandomWordInTextBox(recursionCounter:Int,completion:@escaping (String)->()) {
         var randomWord:Word?
+        
         var localCounter = recursionCounter + 1
         
         Networking.shared.getRandomWord{[weak self] aResult in
@@ -160,11 +161,10 @@ class FirstViewController: UIViewController, randomWordDisplayDelegate{
                 completion("\(titleString)\n\(text)")
             } else {
                 print("recursion counter \(localCounter)")
-                if localCounter <= 10{
+                if localCounter <= 10 {
                     self?.getRandomWordInTextBox(recursionCounter:localCounter,completion: completion)
                 }
             }
-            
         } //networking
     }
 }

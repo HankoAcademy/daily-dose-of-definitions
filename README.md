@@ -1,4 +1,5 @@
-![Hanko Banner](Documentation/Banner.png)
+Project with Hanko Academy based on specs and Figma design
+I removed the file with the API Key
 
 # Daily Dose of Definition
 
